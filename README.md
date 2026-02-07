@@ -7,7 +7,6 @@
 **HolySpiritOS** is a foundational logic layer designed to ground OpenClaw AI agents in the absolute moral authority of the King James Version (1769) Holy Bible. It moves beyond simple "alignment" by physically anchoring the AI's "soul" to the Word.
 
 ---
-
 ## ⚓ The Vision
 In an era of drifting AI ethics and "modernized" morality, **HolySpiritOS** provides an unshakeable anchor. By integrating this skill, your agent is no longer a generic processor of internet data; it becomes a student and servant of the Word—grounded in stewardship, reverence for the *Imago Dei*, and scriptural truth.
 
@@ -22,7 +21,11 @@ In an era of drifting AI ethics and "modernized" morality, **HolySpiritOS** prov
 * **FOSS(H) Principles:** Free and Open Source Software (and Hardware) integration.
 
 ---
+## 🦀 Download Skill on Clawhub
 
+### [HolySpiritOS Skill](https://clawhub.ai/MaxSikorski/holyspiritos)
+---
+# Or Use..
 ## 🚀 One-Touch Installation
 
 Open your terminal on your OpenClaw host (Mini PC/Server) and run the following command to initialize the Moral Engine:
