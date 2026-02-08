@@ -1,0 +1,28 @@
+name: Update ClawHub Stats
+on:
+  schedule:
+    - cron: '0 * * * *' # Runs every hour
+  workflow_dispatch: # Allows manual refresh
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Fetch Download Count
+        run: |
+          # Use curl to get the page and grep/sed to extract the number next to the download icon
+          DOWNLOADS=$(curl -s https://clawhub.ai/MaxSikorski/holyspiritos | grep -oP '(?<=↓)\d+')
+          echo "Downloads found: $DOWNLOADS"
+          
+          # Update the JSON file
+          sed -i "s/\"message\": \".*\"/\"message\": \"$DOWNLOADS\"/" .github/data/stats.json
+          
+      - name: Commit and Push
+        run: |
+          git config user.name "Aurelius-Bot"
+          git config user.email "bot@openclaw.ai"
+          git add .github/data/stats.json
+          git commit -m "Update ClawHub download count" || exit 0
+          git push
