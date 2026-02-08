@@ -23,6 +23,8 @@ In an era of drifting AI ethics and "modernized" morality, **HolySpiritOS** prov
 ---
 ## 🦀 Download Skill on Clawhub
 
+### ![ClawHub Downloads](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/MaxSikorski/HolySpiritOS/main/.github/data/stats.json)
+
 ### [HolySpiritOS Skill ↗](https://clawhub.ai/MaxSikorski/holyspiritos)
 
 ---
