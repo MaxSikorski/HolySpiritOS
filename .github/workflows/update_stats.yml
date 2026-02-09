@@ -4,6 +4,9 @@ on:
     - cron: '0 * * * *' # Runs every hour
   workflow_dispatch: # Allows manual refresh
 
+permissions:
+  contents: write
+
 jobs:
   update-stats:
     runs-on: ubuntu-latest
