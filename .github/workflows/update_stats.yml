@@ -15,21 +15,26 @@ jobs:
       
       - name: Fetch Download Count
         run: |
-          # 1. Fetch the raw HTML of your specific profile
-          RAW_HTML=$(curl -sL https://clawhub.ai/MaxSikorski/holyspiritos)
+          # Use a fake User-Agent to ensure ClawHub doesn't block the request
+          RAW_HTML=$(curl -sL -A "Mozilla/5.0" https://clawhub.ai/MaxSikorski/holyspiritos)
           
-          # 2. Extract digits that appear right before the word 'current' or 'all-time'
-          # This is much more reliable than searching for a specific arrow symbol
-          DOWNLOADS=$(echo "$RAW_HTML" | grep -oP '\d+(?=\s+(current|all-time))' | head -1)
-          
+          # This regex looks for a digit followed by a space and the down arrow code or the word 'current'
+          # Based on your inspect screenshot, we are targeting the first number in that 'stat' div
+          DOWNLOADS=$(echo "$RAW_HTML" | grep -oP '(?<=stat">).*?\K\d+' | head -1)
+
+          # Fallback: if the above is too specific, grab the number right before 'current'
+          if [ -z "$DOWNLOADS" ]; then
+            DOWNLOADS=$(echo "$RAW_HTML" | grep -oP '\d+(?=\s+current)' | head -1)
+          fi
+
           echo "Downloads found: $DOWNLOADS"
           
           if [ -z "$DOWNLOADS" ]; then
-            echo "Error: Could not find download count on page."
+            echo "Error: Could not find download count. Page might be JS-heavy."
             exit 1
           fi
           
-          # 3. Update the JSON file
+          # Update the JSON file
           sed -i "s/\"message\": \".*\"/\"message\": \"$DOWNLOADS\"/" .github/data/stats.json
           
       - name: Commit and Push
