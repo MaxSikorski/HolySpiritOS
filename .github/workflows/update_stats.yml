@@ -1,8 +1,8 @@
 name: Update ClawHub Stats
 on:
   schedule:
-    - cron: '0 * * * *' # Runs every hour
-  workflow_dispatch: # Allows manual refresh
+    - cron: '0 * * * *'
+  workflow_dispatch: # This is what allows the manual trigger!
 
 permissions:
   contents: write
@@ -15,17 +15,13 @@ jobs:
       
       - name: Fetch Download Count
         run: |
-          # 1. Fetch the page, allowing for redirects (-L)
-          # 2. Look for the 'all-time' text which is near your download count in the screenshot
-          # 3. Extract the digits immediately preceding the 'current' or 'all-time' indicators
-          RAW_DATA=$(curl -sL https://clawhub.ai/MaxSikorski/holyspiritos)
-          DOWNLOADS=$(echo "$RAW_DATA" | grep -oP '\d+(?=\s+current)' | head -1)
+          # 1. Fetch the raw HTML of your specific profile
+          RAW_HTML=$(curl -sL https://clawhub.ai/MaxSikorski/holyspiritos)
           
-          # If the first method fails, try a fallback for the arrow symbol
-          if [ -z "$DOWNLOADS" ]; then
-            DOWNLOADS=$(echo "$RAW_DATA" | grep -oP '\d+(?=\s+all-time)' | head -1)
-          fi
-
+          # 2. Extract digits that appear right before the word 'current' or 'all-time'
+          # This is much more reliable than searching for a specific arrow symbol
+          DOWNLOADS=$(echo "$RAW_HTML" | grep -oP '\d+(?=\s+(current|all-time))' | head -1)
+          
           echo "Downloads found: $DOWNLOADS"
           
           if [ -z "$DOWNLOADS" ]; then
@@ -33,13 +29,13 @@ jobs:
             exit 1
           fi
           
-          # Update the JSON file
+          # 3. Update the JSON file
           sed -i "s/\"message\": \".*\"/\"message\": \"$DOWNLOADS\"/" .github/data/stats.json
           
       - name: Commit and Push
         run: |
+          # Using your preferred 'Aurelius-Bot' name for the logs
           git config user.name "Aurelius-Bot"
           git config user.email "bot@openclaw.ai"
           git add .github/data/stats.json
-          git commit -m "Update ClawHub download count" || exit 0
-          git push
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update ClawHub stats: $DOWNLOADS downloads" && git push)
