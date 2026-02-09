@@ -15,9 +15,23 @@ jobs:
       
       - name: Fetch Download Count
         run: |
-          # Use curl to get the page and grep/sed to extract the number next to the download icon
-          DOWNLOADS=$(curl -s https://clawhub.ai/MaxSikorski/holyspiritos | grep -oP '(?<=↓)\d+')
+          # 1. Fetch the page, allowing for redirects (-L)
+          # 2. Look for the 'all-time' text which is near your download count in the screenshot
+          # 3. Extract the digits immediately preceding the 'current' or 'all-time' indicators
+          RAW_DATA=$(curl -sL https://clawhub.ai/MaxSikorski/holyspiritos)
+          DOWNLOADS=$(echo "$RAW_DATA" | grep -oP '\d+(?=\s+current)' | head -1)
+          
+          # If the first method fails, try a fallback for the arrow symbol
+          if [ -z "$DOWNLOADS" ]; then
+            DOWNLOADS=$(echo "$RAW_DATA" | grep -oP '\d+(?=\s+all-time)' | head -1)
+          fi
+
           echo "Downloads found: $DOWNLOADS"
+          
+          if [ -z "$DOWNLOADS" ]; then
+            echo "Error: Could not find download count on page."
+            exit 1
+          fi
           
           # Update the JSON file
           sed -i "s/\"message\": \".*\"/\"message\": \"$DOWNLOADS\"/" .github/data/stats.json
