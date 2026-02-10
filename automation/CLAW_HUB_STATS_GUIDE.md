@@ -1,6 +1,6 @@
 # <img src="logo.svg" width="40" align="center"> Verified ClawHub Stats Automation - Downloads
 
-This directory contains the logic used to power the live download counters for **HolySpiritOS**.
+This directory contains the logic used to power the live download counters for **🕊️HolySpiritOS**.
 
 ## 🧠 Technical Architecture: The "Hydration Pierce"
 
