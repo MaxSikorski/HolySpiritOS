@@ -19,20 +19,26 @@ jobs:
           USER_AGENT="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
           curl -sL -A "$USER_AGENT" https://clawhub.ai/MaxSikorski/holyspiritos -o raw_page.html
           
-          # 2. Improved Extraction Logic
-          # This looks for the "1 · 127 · 0" pattern seen in your screenshots
-          DOWNLOADS=$(grep -oP '(?<=· ).*?(?= ·)' raw_page.html | head -1 | tr -d '[:space:],')
+          # 2. Target the Unicode Download Icon (⤓)
+          # We look for the number sitting between the download arrow and the next dot
+          DOWNLOADS=$(grep -oP '(?<=⤓ ).*?(?= ·)' raw_page.html | head -1 | tr -d '[:space:],')
 
-          # 3. Validation: If it's not a number, DO NOT update the file
+          # 3. Validation & Fallback (If Unicode fails to parse in the runner)
           if [ -z "$DOWNLOADS" ] || ! [[ "$DOWNLOADS" =~ ^[0-9]+$ ]]; then
-            echo "Error: Could not find a valid numeric download count."
+            echo "Unicode match failed, trying numeric-only extraction..."
+            DOWNLOADS=$(grep -oP '(?<=· ).*?(?= ·)' raw_page.html | head -n 1 | tr -d '[:space:],')
+          fi
+          
+          # 4. Emergency Stop
+          if [ -z "$DOWNLOADS" ]; then
+            echo "Critical Error: Could not find 127 or any number on the page."
             exit 1
           fi
 
-          echo "Success! Found downloads: $DOWNLOADS"
+          echo "Confirmed Downloads: $DOWNLOADS"
           
-          # 4. Update the JSON file
-          echo "{\"schemaVersion\": 1, \"label\": \"ClawHub Downloads\", \"message\": \"$DOWNLOADS\", \"color\": \"orange\"}" > .github/data/stats.json
+          # 5. Overwrite stats.json with the correct data and orange branding
+          echo "{\"schemaVersion\": 1, \"label\": \"CLAWHUB DOWNLOADS\", \"message\": \"$DOWNLOADS\", \"color\": \"orange\"}" > .github/data/stats.json
           
           if [ -z "$DOWNLOADS" ]; then
             echo "--- DEBUG: RAW DATA STREAM ---"
