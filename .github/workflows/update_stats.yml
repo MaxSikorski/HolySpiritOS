@@ -1,8 +1,8 @@
 name: Update ClawHub Stats
 on:
   schedule:
-    - cron: '0 * * * *' # Runs every hour
-  workflow_dispatch: # Allows manual trigger
+    - cron: '0 * * * *'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -15,33 +15,29 @@ jobs:
       
       - name: Fetch Download Count
         run: |
-          # 1. Define a real browser identity to prevent ClawHub from blocking the bot
+          # 1. Fetch the raw HTML (using a browser identity)
           USER_AGENT="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-          
-          # 2. Fetch the HTML and save it to a temporary file
           curl -sL -A "$USER_AGENT" https://clawhub.ai/MaxSikorski/holyspiritos -o raw_page.html
           
-          # 3. Extract the download count using the 'stat' class from your screenshot
-          # This jumps to 'class="stat">', ignores the Star '1', and grabs the next digits '65'
-          DOWNLOADS=$(grep -oP '(?<=class="stat">).*?\K\d+' raw_page.html | head -1)
-          
-          # Fallback: Search for numbers appearing before the word 'current'
-          if [ -z "$DOWNLOADS" ]; then
-            DOWNLOADS=$(grep -oP '\d+(?=\s+current)' raw_page.html | head -1)
+          # 2. Precision Extraction from the JS Hydration Script
+          # This looks for your skill name and grabs the number immediately following the 'l:$R[13]' data block
+          # Based on your view-source, the data is stored in the $_TSR.router variable.
+          DOWNLOADS=$(grep -oP '(?<=displayName":"HolySpiritOS").*?u":\K\d+' raw_page.html | head -1)
+
+          # Fallback: If 'u' is a timestamp, we hunt for the first 3-digit number after your skill name
+          if [ -z "$DOWNLOADS" ] || [ ${#DOWNLOADS} -gt 5 ]; then
+             DOWNLOADS=$(grep -oP '(?<=HolySpiritOS").*?(\d{1,5})' raw_page.html | grep -oP '\d+' | head -1)
           fi
 
-          echo "Downloads found: $DOWNLOADS"
+          echo "Detected Downloads: $DOWNLOADS"
           
-          # 4. Error Handling and Debugging
           if [ -z "$DOWNLOADS" ]; then
-            echo "--- DEBUG: WHAT THE BOT SEES ---"
-            cat raw_page.html | head -n 50
-            echo "-------------------------------"
-            echo "Error: Could not find download count. Bot detection might be active."
+            echo "--- DEBUG: RAW DATA STREAM ---"
+            grep -o '$_TSR.router.*' raw_page.html | cut -c 1-500
+            echo "----------------------------"
             exit 1
           fi
           
-          # 5. Update the JSON file at .github/data/stats.json
           sed -i "s/\"message\": \".*\"/\"message\": \"$DOWNLOADS\"/" .github/data/stats.json
           
       - name: Commit and Push
@@ -49,5 +45,4 @@ jobs:
           git config user.name "Aurelius-Bot"
           git config user.email "bot@openclaw.ai"
           git add .github/data/stats.json
-          # Only push if the number actually changed
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Update ClawHub stats: $DOWNLOADS downloads" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update stats: $DOWNLOADS downloads" && git push)
