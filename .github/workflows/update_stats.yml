@@ -1,4 +1,19 @@
-- name: Fetch Download Count
+name: Update ClawHub Stats
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch: # This is what allows the manual trigger!
+
+permissions:
+  contents: write
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Fetch Download Count
         run: |
           # Use a fake User-Agent to ensure ClawHub doesn't block the request
           RAW_HTML=$(curl -sL -A "Mozilla/5.0" https://clawhub.ai/MaxSikorski/holyspiritos)
@@ -21,3 +36,11 @@
           
           # Update the JSON file
           sed -i "s/\"message\": \".*\"/\"message\": \"$DOWNLOADS\"/" .github/data/stats.json
+          
+      - name: Commit and Push
+        run: |
+          # Using your preferred 'Aurelius-Bot' name for the logs
+          git config user.name "Aurelius-Bot"
+          git config user.email "bot@openclaw.ai"
+          git add .github/data/stats.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update ClawHub stats: $DOWNLOADS downloads" && git push)
