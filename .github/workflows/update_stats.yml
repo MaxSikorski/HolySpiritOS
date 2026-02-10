@@ -20,18 +20,19 @@ jobs:
           curl -sL -A "$USER_AGENT" https://clawhub.ai/MaxSikorski/holyspiritos -o raw_page.html
           
           # 2. Target the Unicode Download Icon (⤓)
-          # We look for the number sitting between the download arrow and the next dot
           DOWNLOADS=$(grep -oP '(?<=⤓ ).*?(?= ·)' raw_page.html | head -1 | tr -d '[:space:],')
 
-          # 3. Validation & Fallback (If Unicode fails to parse in the runner)
+          # 3. Validation & Fallback
           if [ -z "$DOWNLOADS" ] || ! [[ "$DOWNLOADS" =~ ^[0-9]+$ ]]; then
             echo "Unicode match failed, trying numeric-only extraction..."
             DOWNLOADS=$(grep -oP '(?<=· ).*?(?= ·)' raw_page.html | head -n 1 | tr -d '[:space:],')
           fi
           
-          # 4. Emergency Stop
-          if [ -z "$DOWNLOADS" ]; then
-            echo "Critical Error: Could not find 127 or any number on the page."
+          # 4. Emergency Stop: Prevents pushing a 0 if scraping fails
+          if [ -z "$DOWNLOADS" ] || ! [[ "$DOWNLOADS" =~ ^[0-9]+$ ]]; then
+            echo "Critical Error: Could not find valid download count."
+            echo "--- DEBUG: RAW DATA STREAM ---"
+            cat raw_page.html | head -n 50
             exit 1
           fi
 
@@ -39,15 +40,6 @@ jobs:
           
           # 5. Overwrite stats.json with the correct data and orange branding
           echo "{\"schemaVersion\": 1, \"label\": \"CLAWHUB DOWNLOADS\", \"message\": \"$DOWNLOADS\", \"color\": \"orange\"}" > .github/data/stats.json
-          
-          if [ -z "$DOWNLOADS" ]; then
-            echo "--- DEBUG: RAW DATA STREAM ---"
-            grep -o '$_TSR.router.*' raw_page.html | cut -c 1-500
-            echo "----------------------------"
-            exit 1
-          fi
-          
-          sed -i "s/\"message\": \".*\"/\"message\": \"$DOWNLOADS\"/" .github/data/stats.json
           
       - name: Commit and Push
         run: |
