@@ -3,7 +3,7 @@
 
 [![FOSS(H)](https://img.shields.io/badge/FOSS(H)-Open%20Source-black?style=for-the-badge)](https://github.com/MaxSikorski/HolySpiritOS)
 [![KJV 1769](https://img.shields.io/badge/Foundation-KJV%201769-gold?style=for-the-badge)](https://github.com/MaxSikorski/HolySpiritOS/tree/main/foundation) 
-![ClawHub Downloads](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/MaxSikorski/HolySpiritOS/main/.github/data/stats.json?v=133&style=for-the-badge&color=orange)
+![ClawHub Downloads](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/MaxSikorski/HolySpiritOS/main/.github/data/stats.json&v=133&style=for-the-badge&color=orange)
 
 ---
 
@@ -26,7 +26,7 @@ In an era of drifting AI ethics and "modernized" morality, **HolySpiritOS** prov
 ---
 ## 🦀 Download Skill on Clawhub
 
-### ![ClawHub Downloads](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/MaxSikorski/HolySpiritOS/main/.github/data/stats.json?v=133&style=for-the-badge&color=orange)
+### ![ClawHub Downloads](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/MaxSikorski/HolySpiritOS/main/.github/data/stats.json&v=133&style=for-the-badge&color=orange)
 ### [HolySpiritOS Skill ↗](https://clawhub.ai/MaxSikorski/holyspiritos)
 
 ---
