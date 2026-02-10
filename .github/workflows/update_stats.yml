@@ -15,21 +15,31 @@ jobs:
       
       - name: Fetch Download Count
         run: |
-          # 1. Fetch the raw HTML (using a browser identity)
+          # 1. Fetch the raw HTML
           USER_AGENT="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
           curl -sL -A "$USER_AGENT" https://clawhub.ai/MaxSikorski/holyspiritos -o raw_page.html
           
-          # 2. Precision Extraction from the JS Hydration Script
-          # This looks for your skill name and grabs the number immediately following the 'l:$R[13]' data block
-          # Based on your view-source, the data is stored in the $_TSR.router variable.
-          DOWNLOADS=$(grep -oP '(?<=displayName":"HolySpiritOS").*?u":\K\d+' raw_page.html | head -1)
+          # 2. New Robust Extraction
+          # We search for the specific star/download pattern seen in your screenshot: 1 · 127 · 0
+          # This grabs the number sitting between the two dots (·)
+          DOWNLOADS=$(grep -oP '(?<=· ).*?(?= ·)' raw_page.html | head -1 | tr -d '[:space:],')
 
-          # Fallback: If 'u' is a timestamp, we hunt for the first 3-digit number after your skill name
-          if [ -z "$DOWNLOADS" ] || [ ${#DOWNLOADS} -gt 5 ]; then
-             DOWNLOADS=$(grep -oP '(?<=HolySpiritOS").*?(\d{1,5})' raw_page.html | grep -oP '\d+' | head -1)
+          # 3. Validation & Fallback
+          if [ -z "$DOWNLOADS" ] || ! [[ "$DOWNLOADS" =~ ^[0-9]+$ ]]; then
+            echo "Regex failed, trying secondary pattern..."
+            DOWNLOADS=$(grep -oP '\d+(?= current)' raw_page.html | head -1)
+          fi
+          
+          # Final Safeguard: If all else fails, don't write a 0. Use the last known good number.
+          if [ -z "$DOWNLOADS" ]; then
+            echo "Could not fetch new count. Keeping existing data."
+            exit 0 
           fi
 
           echo "Detected Downloads: $DOWNLOADS"
+          
+          # 4. Update JSON with strict formatting
+          echo "{\"schemaVersion\": 1, \"label\": \"CLAWHUB DOWNLOADS\", \"message\": \"$DOWNLOADS\", \"color\": \"orange\"}" > .github/data/stats.json
           
           if [ -z "$DOWNLOADS" ]; then
             echo "--- DEBUG: RAW DATA STREAM ---"
