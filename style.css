@@ -424,6 +424,44 @@ footer nav a:hover {
     box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
 }
 
+@media (max-width: 768px) {
+    main {
+        padding: 10vh 20px 5vh;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        letter-spacing: 0.2em;
+    }
+
+    .subtitle {
+        font-size: 1.1rem;
+    }
+
+    .command-box {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    code {
+        margin-right: 0;
+        font-size: 0.85rem;
+        width: 100%;
+        text-align: center;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    footer nav {
+        gap: 25px;
+        flex-wrap: wrap;
+    }
+}
+
 @media print {
 
     .reveal,
