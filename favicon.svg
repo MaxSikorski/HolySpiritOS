@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>
+    .cross { fill: #B8860B; }
+  </style>
+  <rect class="cross" x="14" y="2" width="4" height="28" rx="1"/>
+  <rect class="cross" x="6" y="9" width="20" height="4" rx="1"/>
+</svg>

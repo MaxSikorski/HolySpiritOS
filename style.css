@@ -1,0 +1,435 @@
+:root {
+    --white: #ffffff;
+    --off-white: #fcfcfc;
+    --gold: #B8860B;
+    --gold-glow: rgba(184, 134, 11, 0.3);
+    --text-dim: #555555;
+    --text-main: #111111;
+    --bg-color: #ffffff;
+    --clouds-opacity: 0.2;
+    --shimmer-opacity: 0.4;
+    --border-color: rgba(0, 0, 0, 0.05);
+    --card-bg: rgba(255, 255, 255, 0.5);
+    --command-bg: rgba(255, 255, 255, 0.95);
+}
+
+[data-theme="dark"] {
+    --bg-color: #050A19;
+    /* Deep Midnight Blue */
+    --text-main: #fcfcfc;
+    --text-dim: #a0a0a0;
+    --clouds-opacity: 0.08;
+    /* Subtler clouds at night */
+    --shimmer-opacity: 0.15;
+    --border-color: rgba(255, 215, 0, 0.15);
+    /* Gold tint borders */
+    --card-bg: rgba(10, 20, 40, 0.6);
+    --command-bg: rgba(15, 25, 50, 0.95);
+    --gold-glow: rgba(184, 134, 11, 0.5);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: 'Cormorant Garamond', serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background-color 0.8s ease, color 0.5s ease;
+}
+
+/* --- Heavenly Background Effects (Layered behind content) --- */
+.divine-light {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+    z-index: 1;
+    opacity: 0;
+    filter: blur(60px);
+    pointer-events: none;
+}
+
+.clouds-left,
+.clouds-right {
+    position: fixed;
+    top: 0;
+    width: 50vw;
+    height: 100vh;
+    background: url('https://www.transparenttextures.com/patterns/snow.png');
+    opacity: var(--clouds-opacity);
+    z-index: 1;
+    pointer-events: none;
+    transition: opacity 1s ease;
+}
+
+.clouds-left {
+    left: -10%;
+    animation: partingLeft 25s infinite alternate ease-in-out;
+}
+
+.clouds-right {
+    right: -10%;
+    animation: partingRight 25s infinite alternate ease-in-out;
+}
+
+@keyframes partingLeft {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-5%);
+    }
+}
+
+@keyframes partingRight {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(5%);
+    }
+}
+
+@keyframes partingRight {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(5%);
+    }
+}
+
+/* --- Content Alignment & Visibility Fix --- */
+main {
+    width: 100%;
+    max-width: 800px;
+    /* Locked alignment for the "Red Box" request */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 15vh;
+    padding-bottom: 10vh;
+    position: relative;
+    z-index: 100;
+    /* Highest priority to ensure visibility */
+}
+
+header {
+    text-align: center;
+    margin-bottom: 80px;
+    width: 100%;
+}
+
+h1 {
+    font-size: 4.5rem;
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    margin-bottom: 20px;
+    color: var(--text-main);
+    transition: color 0.5s ease;
+}
+
+.subtitle {
+    font-size: 1.3rem;
+    opacity: 0.85;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    color: var(--text-main);
+    transition: color 0.5s ease;
+}
+
+.tagline {
+    font-size: 1.1rem;
+    opacity: 0.6;
+    letter-spacing: 2px;
+    color: var(--text-main);
+    transition: color 0.5s ease;
+}
+
+/* --- Action Zone Alignment --- */
+.action-zone {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+.summon-text {
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    opacity: 0.5;
+    margin-bottom: 20px;
+    color: var(--text-main);
+}
+
+.command-box {
+    background: var(--command-bg);
+    border: 1px solid var(--border-color);
+    padding: 22px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+    margin-bottom: 15px;
+    width: 100%;
+    transition: all 0.5s ease;
+}
+
+code {
+    font-family: monospace;
+    font-size: 0.95rem;
+    color: var(--text-dim);
+    white-space: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    flex: 1;
+    text-align: left;
+    margin-right: 20px;
+}
+
+code::-webkit-scrollbar {
+    display: none;
+}
+
+.copy-btn {
+    background: none;
+    border: 1px solid rgba(136, 136, 136, 0.3);
+    padding: 8px 16px;
+    font-size: 0.65rem;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: all 0.4s ease;
+    color: var(--text-main);
+}
+
+.copy-btn:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #fff;
+    box-shadow: 0 0 15px var(--gold-glow);
+}
+
+.instruction {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    font-style: italic;
+    transition: color 0.5s ease;
+}
+
+/* --- BLUE BOXES: Feature Areas with Gold Hover Fix --- */
+.feature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    text-align: left;
+    margin-bottom: 80px;
+    width: 100%;
+}
+
+.feature {
+    padding: 30px;
+    background: var(--card-bg);
+    /* Subtle visibility */
+    border: 1px solid var(--border-color);
+    /* Soft border so boxes are visible */
+    border-radius: 12px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature::after {
+    content: "";
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 24px;
+    height: 24px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%23B8860B' x='14' y='2' width='4' height='28' rx='1'/%3E%3Crect fill='%23B8860B' x='6' y='9' width='20' height='4' rx='1'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.1;
+    transition: all 0.4s ease;
+    pointer-events: none;
+}
+
+.feature:hover::after {
+    opacity: 0.7;
+    filter: brightness(0) invert(1);
+    transform: scale(1.1);
+}
+
+/* The Gold Effect matching the Copy Button */
+.feature:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    box-shadow: 0 10px 30px var(--gold-glow);
+    transform: translateY(-5px);
+}
+
+.feature h3 {
+    font-weight: 400;
+    font-size: 1.35rem;
+    margin-bottom: 10px;
+    color: var(--text-main);
+    transition: color 0.3s;
+}
+
+.feature p {
+    font-size: 1.05rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    transition: color 0.3s;
+}
+
+/* Forces text to white on Gold Hover to maintain readability */
+.feature:hover h3,
+.feature:hover p {
+    color: #ffffff;
+}
+
+/* --- Quote and Footer --- */
+.quote-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.footer-quote {
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--text-dim);
+    margin-bottom: 100px;
+    text-align: center;
+    width: 100%;
+    line-height: 1.7;
+}
+
+footer nav {
+    display: flex;
+    justify-content: center;
+    gap: 55px;
+    padding-bottom: 80px;
+}
+
+footer nav a {
+    text-decoration: none;
+    color: var(--text-main);
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 3px;
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+footer nav a:hover {
+    color: var(--gold);
+}
+
+.gold-link {
+    color: var(--gold) !important;
+    opacity: 1 !important;
+}
+
+/* --- Theme Toggle & Animations --- */
+#theme-toggle {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+    color: var(--text-main);
+    transition: color 0.5s ease;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#theme-toggle svg {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+}
+
+/* Logic: Show Sun in Dark Mode (to switch to light), Moon in Light Mode (to switch to dark) */
+#theme-toggle .icon-sun {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.5);
+}
+
+#theme-toggle .icon-moon {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+}
+
+[data-theme="dark"] #theme-toggle .icon-sun {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+    color: #ffffff;
+    /* Explicit white for sun */
+}
+
+[data-theme="dark"] #theme-toggle .icon-moon {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.5);
+}
+
+.stars-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 80vh;
+    /* Stars only in the upper portion */
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1.5s ease, visibility 1.5s ease;
+}
+
+[data-theme="dark"] .stars-container {
+    opacity: 1;
+    visibility: visible;
+}
+
+.star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+}
+
+@media print {
+
+    .reveal,
+    .divine-light {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+    }
+}

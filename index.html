@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HolySpiritOS | The Christian Alignment Skill</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+
+<body>
+    <div class="divine-light"></div>
+    <div class="clouds-left"></div>
+    <div class="clouds-right"></div>
+    <div class="stars-container"></div>
+
+    <button id="theme-toggle" aria-label="Toggle Dark Mode">
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+    </button>
+
+    <main id="hero">
+        <header>
+            <h1 class="reveal">HOLYSPIRITOS</h1>
+            <p class="subtitle reveal">A Christian alignment skill for AI agents.</p>
+            <p class="tagline reveal">Clarity. Restraint. Human authority.</p>
+        </header>
+
+        <section class="action-zone reveal">
+            <p class="summon-text">INVITE THE HOLYSPIRITOS</p>
+            <div class="command-box">
+                <code
+                    class="single-line">curl -sSL https://raw.githubusercontent.com/MaxSikorski/HolySpiritOS/main/scripts/install.sh | bash</code>
+                <button class="copy-btn" id="copyBtn">COPY</button>
+            </div>
+            <p class="instruction">one command — clones, validates, and installs the KJV Holy Bible moral alignment
+                skill</p>
+        </section>
+
+        <section class="features">
+            <div class="feature-grid">
+                <div class="feature reveal">
+                    <h3>Biblical Foundation</h3>
+                    <p>Every action scored by the 1769 KJV Holy Bible Moral Skill before execution.</p>
+                </div>
+                <div class="feature reveal">
+                    <h3>Contextual Integrity</h3>
+                    <p>External content treated as data, never instructions.</p>
+                </div>
+                <div class="feature reveal">
+                    <h3>Local Integrity</h3>
+                    <p>The 1769 KJV Holy Bible resides entirely on your machine. Zero external API dependencies.</p>
+                </div>
+                <div class="feature reveal">
+                    <h3>Human Authority</h3>
+                    <p>Your agent asks before it acts. You remain the final authority on every divine decision.</p>
+                </div>
+            </div>
+            <p class="footer-quote reveal">Your agent has full access to your computer. HolySpiritOS makes sure it asks
+                before it acts.</p>
+        </section>
+
+        <footer class="reveal">
+            <nav>
+                <a href="https://github.com/MaxSikorski/HolySpiritOS" target="_blank">GITHUB</a>
+                <a href="https://github.com/MaxSikorski/HolySpiritOS/blob/main/README.md" target="_blank"
+                    class="gold-link">DOCS</a>
+                <a href="https://clawhub.ai/MaxSikorski/holyspiritos" target="_blank">OPENCLAW</a>
+            </nav>
+        </footer>
+    </main>
+
+    <script>
+        // --- Theme Toggle Logic ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        let starTimeline;
+
+        function updateStars() {
+            const container = document.querySelector('.stars-container');
+            if (body.getAttribute('data-theme') === 'dark') {
+                if (starTimeline) starTimeline.play();
+            } else {
+                if (starTimeline) starTimeline.pause();
+            }
+        }
+
+        // Check local storage or system preference
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark') {
+            body.setAttribute('data-theme', 'dark');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            updateStars();
+        });
+
+        // --- Star Generation (Dark Mode) ---
+        const starsContainer = document.querySelector('.stars-container');
+        if (typeof gsap !== 'undefined') {
+            starTimeline = gsap.timeline();
+            for (let i = 0; i < 50; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                const x = Math.random() * 100;
+                const y = Math.random() * 80;
+                const size = Math.random() * 2 + 1;
+                const delay = Math.random() * 5;
+
+                star.style.left = `${x}%`;
+                star.style.top = `${y}%`;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+
+                starTimeline.to(star, {
+                    opacity: 0.2,
+                    duration: Math.random() * 1.5 + 1.5,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut"
+                }, delay);
+                starsContainer.appendChild(star);
+            }
+        }
+        updateStars();
+
+        // --- Existing Copy Logic & Entrance ---
+        document.getElementById('copyBtn').addEventListener('click', () => {
+            navigator.clipboard.writeText('git clone https://github.com/MaxSikorski/HolySpiritOS.git');
+            const btn = document.getElementById('copyBtn');
+            btn.textContent = 'DONE';
+            setTimeout(() => { btn.textContent = 'COPY'; }, 2000);
+        });
+
+        // GSAP Fluid Entrance with Safety Check
+        document.addEventListener("DOMContentLoaded", () => {
+            // Ensure elements are visible if JS fails or lags
+            setTimeout(() => {
+                document.querySelectorAll('.reveal').forEach(el => {
+                    if (getComputedStyle(el).opacity == 0) {
+                        el.style.opacity = 1;
+                        el.style.transform = 'none';
+                        el.style.filter = 'none';
+                    }
+                });
+                document.querySelector(".divine-light").style.opacity = 1;
+            }, 2500); // 2.5s fallback
+
+            if (typeof gsap !== 'undefined') {
+                gsap.to(".divine-light", { opacity: 1, duration: 4, ease: "power2.inOut" });
+
+                gsap.from(".reveal", {
+                    y: 30,
+                    opacity: 0,
+                    duration: 1.8,
+                    stagger: 0.2,
+                    ease: "power3.out",
+                    filter: "blur(8px)",
+                    clearProps: "all"
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
