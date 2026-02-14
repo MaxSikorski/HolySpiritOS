@@ -49,7 +49,7 @@ To ensure full transparency and user control, this skill performs the following:
 
 ---
 
-## 🔄 Reversibility (Uninstallation)
+## 🔄 Reversibility (Uninstall)
 To remove the HolySpiritOS alignment and restore your original configuration:
 
 ```bash
