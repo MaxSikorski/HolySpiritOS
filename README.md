@@ -2,8 +2,8 @@
 ### *The Moral Operating System for AI Agents*
 
 [![FOSS(H)](https://img.shields.io/badge/FOSS(H)-Open%20Source-black?style=for-the-badge)](https://github.com/MaxSikorski/HolySpiritOS)
-[![KJV 1769](https://img.shields.io/badge/Foundation-KJV%201769-gold?style=for-the-badge)](https://github.com/MaxSikorski/HolySpiritOS/tree/main/foundation) 
-![ClawHub Downloads](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/MaxSikorski/HolySpiritOS/main/.github/data/stats.json&v=1963&style=for-the-badge&color=orange)
+[![KJV 1769](https://img.shields.io/badge/Foundation-KJV%201769-gold?style=for-the-badge)](https://github.com/MaxSikorski/HolySpiritOS/tree/main/foundation)
+![Clawhub Downloads](https://img.shields.io/badge/Clawhub_Downloads-2,400+-orange?style=for-the-badge)
 ![Unique Cloners](https://img.shields.io/badge/Unique_Cloners-278-blue?style=for-the-badge&logo=github)
 
 ---
