@@ -68,3 +68,7 @@ HolySpiritOS Logic: The AI references the Foundation, assesses the concept of do
 This skill is shared under **FOSS(H)** principles. The Word of God is free; the implementation is Open Source. 
 
 **"For the word of God is quick, and powerful, and sharper than any twoedged sword..." — Hebrews 4:12**
+
+## Download History
+
+[![Download History](https://skill-history.com/chart/maxsikorski/holyspiritos.svg)](https://skill-history.com/maxsikorski/holyspiritos)
