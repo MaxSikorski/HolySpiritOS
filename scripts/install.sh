@@ -6,9 +6,12 @@
 #   ./scripts/install.sh              # auto-detect installed agents
 #   ./scripts/install.sh claude       # Claude Code   -> ~/.claude/skills/
 #   ./scripts/install.sh codex        # Codex CLI     -> ~/.codex/skills/
+#   ./scripts/install.sh pi           # Pi agent      -> ~/.pi/agent/skills/
 #   ./scripts/install.sh hermes       # Hermes Agent  -> ~/.hermes/skills/
+#   ./scripts/install.sh opencode     # OpenCode      -> ~/.config/opencode/skills/
 #   ./scripts/install.sh antigravity  # Antigravity   -> ~/.gemini/antigravity-cli/skills/
 #   ./scripts/install.sh openclaw     # OpenClaw      -> foundation + soul.md patch
+#   ./scripts/install.sh shared      # user-wide      -> ~/.agents/skills/ (read by OpenCode, Pi, and other standard-compliant harnesses)
 #   ./scripts/install.sh project      # this repo     -> ./.agents/skills/ (shared standard)
 #   ./scripts/install.sh all          # every agent found on this machine
 
@@ -35,20 +38,25 @@ fetch() { # fetch <relative-path> <destination-file>
     fi
 }
 
+# Any Python 3 works — lookup.py is stdlib-only, zero dependencies.
+PY=""
+if command -v python3 >/dev/null 2>&1; then PY="python3";
+elif command -v python >/dev/null 2>&1; then PY="python"; fi
+
 install_skill_dir() { # install_skill_dir <label> <target-dir>
     local label="$1" target="$2"
     echo "📖 Installing $SKILL_NAME for $label -> $target"
     for f in $SKILL_FILES; do
         fetch "$SKILL_SRC/$f" "$target/$f"
     done
-    if command -v python3 >/dev/null 2>&1; then
-        if python3 "$target/scripts/lookup.py" --self-test >/dev/null 2>&1; then
+    if [ -n "$PY" ]; then
+        if "$PY" "$target/scripts/lookup.py" --self-test >/dev/null 2>&1; then
             echo "✅ $label: installed and self-test passed."
         else
-            echo "⚠️ $label: installed, but self-test failed — run: python3 $target/scripts/lookup.py --self-test"
+            echo "⚠️ $label: installed, but self-test failed — run: $PY $target/scripts/lookup.py --self-test"
         fi
     else
-        echo "✅ $label: installed (python3 not found; skipped self-test)."
+        echo "✅ $label: installed (Python not found; skipped self-test)."
     fi
 }
 
@@ -97,11 +105,14 @@ do_target() {
     case "$1" in
         claude)      install_skill_dir "Claude Code" "$HOME/.claude/skills/$SKILL_NAME" ;;
         codex)       install_skill_dir "Codex CLI" "$HOME/.codex/skills/$SKILL_NAME" ;;
+        pi)          install_skill_dir "Pi agent" "$HOME/.pi/agent/skills/$SKILL_NAME" ;;
         hermes)      install_skill_dir "Hermes Agent" "$HOME/.hermes/skills/$SKILL_NAME" ;;
+        opencode)    install_skill_dir "OpenCode" "$HOME/.config/opencode/skills/$SKILL_NAME" ;;
         antigravity) install_skill_dir "Antigravity" "$HOME/.gemini/antigravity-cli/skills/$SKILL_NAME" ;;
+        shared)      install_skill_dir "shared skills dir (~/.agents/skills)" "$HOME/.agents/skills/$SKILL_NAME" ;;
         project)     install_skill_dir "this project (.agents/skills)" "$PWD/.agents/skills/$SKILL_NAME" ;;
         openclaw)    install_openclaw ;;
-        *) echo "❌ Unknown target: $1 (use claude|codex|hermes|antigravity|openclaw|project|all)"; exit 1 ;;
+        *) echo "❌ Unknown target: $1 (use claude|codex|pi|hermes|opencode|antigravity|openclaw|shared|project|all)"; exit 1 ;;
     esac
     INSTALLED=$((INSTALLED + 1))
 }
@@ -110,13 +121,15 @@ echo "🕊️ HolySpiritOS installer"
 if [ "$TARGET" = "auto" ] || [ "$TARGET" = "all" ]; then
     [ -d "$HOME/.claude" ]   && do_target claude
     [ -d "$HOME/.codex" ]    && do_target codex
+    [ -d "$HOME/.pi" ]       && do_target pi
     [ -d "$HOME/.hermes" ]   && do_target hermes
+    [ -d "$HOME/.config/opencode" ] && do_target opencode
     [ -d "$HOME/.gemini/antigravity-cli" ] && do_target antigravity
     [ -d "$HOME/.openclaw" ] && do_target openclaw
     if [ "$INSTALLED" -eq 0 ]; then
-        echo "❌ No supported agent found (looked for ~/.claude, ~/.codex, ~/.hermes,"
-        echo "   ~/.gemini/antigravity-cli, ~/.openclaw)."
-        echo "   Pick a target explicitly: install.sh claude|codex|hermes|antigravity|openclaw|project"
+        echo "❌ No supported agent found (looked for ~/.claude, ~/.codex, ~/.pi, ~/.hermes,"
+        echo "   ~/.config/opencode, ~/.gemini/antigravity-cli, ~/.openclaw)."
+        echo "   Pick a target explicitly: install.sh claude|codex|pi|hermes|opencode|antigravity|openclaw|shared|project"
         exit 1
     fi
 else

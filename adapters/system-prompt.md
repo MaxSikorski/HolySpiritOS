@@ -1,12 +1,12 @@
 # HolySpiritOS — Paste-Ready System Prompt
 
-For chat-only environments with **no file access** (Pi, hosted chat UIs,
-local models without tools). Copy everything inside the block below into the
+For chat-only environments with **no file access** (hosted chat UIs, local
+models without tools). Copy everything inside the block below into the
 system prompt / custom instructions field. Because there is no verse file in
 these environments, this version leans on the model's own knowledge of the
 KJV and adds honesty guardrails against misquotation.
 
-For agents **with** file access (Claude Code, Codex, Hermes, Antigravity, OpenClaw),
+For agents **with** file access (Claude Code, Codex, Pi, Hermes, OpenCode, Antigravity, OpenClaw),
 install the full skill instead — it retrieves exact verse text and is far
 more reliable: https://github.com/MaxSikorski/HolySpiritOS
 

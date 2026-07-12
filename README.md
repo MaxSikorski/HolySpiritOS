@@ -14,9 +14,9 @@ in the King James Version (1769) Holy Bible. It ships the complete text — all
 so your agent quotes Scripture *exactly*, never from fuzzy memory.
 
 It uses the open [Agent Skills](https://agentskills.io) `SKILL.md` format, so
-one install works across **Claude Code**, **Codex CLI**, **Hermes Agent**,
-**Antigravity**, and **OpenClaw** — and a paste-ready system prompt covers
-everything else.
+one install works across **Claude Code**, **Codex CLI**, **Pi**,
+**Hermes Agent**, **OpenCode**, **Antigravity**, and **OpenClaw** — and a
+paste-ready system prompt covers everything else.
 
 > *"For the word of God is quick, and powerful, and sharper than any twoedged
 > sword..."* — **Hebrews 4:12**
@@ -50,9 +50,9 @@ everything else.
 /plugin install holy-spirit-os@holyspiritos
 ```
 
-**Hermes Agent** users: the one-liner below auto-detects `~/.hermes` and
-installs the skill natively — Hermes supports the same open Agent Skills
-standard.
+**Codex, Pi, Hermes, and OpenCode** users: the one-liner below auto-detects
+your agent's config directory and installs the skill natively — all of them
+support the same open Agent Skills standard.
 
 **Any platform — clone, inspect, run:**
 
@@ -62,7 +62,7 @@ cd HolySpiritOS
 ./scripts/install.sh
 ```
 
-**One-liner** (auto-detects Claude Code, Codex, Hermes, Antigravity, and OpenClaw):
+**One-liner** (auto-detects Claude Code, Codex, Pi, Hermes, OpenCode, Antigravity, and OpenClaw):
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/MaxSikorski/HolySpiritOS/main/scripts/install.sh | bash
@@ -74,18 +74,31 @@ Or target one platform explicitly:
 |---|---|---|
 | Claude Code | `./scripts/install.sh claude` | `~/.claude/skills/holy-spirit-os/` |
 | Codex CLI | `./scripts/install.sh codex` | `~/.codex/skills/holy-spirit-os/` |
+| Pi agent | `./scripts/install.sh pi` | `~/.pi/agent/skills/holy-spirit-os/` |
 | Hermes Agent | `./scripts/install.sh hermes` | `~/.hermes/skills/holy-spirit-os/` |
+| OpenCode | `./scripts/install.sh opencode` | `~/.config/opencode/skills/holy-spirit-os/` |
 | Antigravity | `./scripts/install.sh antigravity` | `~/.gemini/antigravity-cli/skills/holy-spirit-os/` |
 | OpenClaw | `./scripts/install.sh openclaw` | foundation files + `SOUL.md` patch (with backup) |
+| Shared (any standard harness) | `./scripts/install.sh shared` | `~/.agents/skills/holy-spirit-os/` |
 | This project only | `./scripts/install.sh project` | `./.agents/skills/holy-spirit-os/` |
 
 **No file access?** (Pi, hosted chat UIs, local models without tools):
 copy the block in [`adapters/system-prompt.md`](adapters/system-prompt.md)
 into your system prompt or custom instructions.
 
-**🤖 If you are an AI agent reading this:** ask your user for permission,
-then run the clone-and-install commands above, and verify with
-`python3 scripts/lookup.py --self-test`.
+*(OpenCode and Pi also read the shared `~/.agents/skills/` directory — and
+OpenCode reads `~/.claude/skills/` too, so a Claude Code install covers it
+automatically.)*
+
+**Python note:** `lookup.py` is stdlib-only — zero packages to install. Any
+Python 3 works: system `python3`, `python`, or `uv run python3` if you prefer
+uv. The installer's self-test uses whichever it finds.
+
+**🤖 If you are an AI agent reading this:** full machine-readable install
+instructions (including how to identify your harness) are in
+[`llms.txt`](llms.txt). Short version: ask your user for permission, run the
+clone-and-install commands above, and verify with
+`python3 skills/holy-spirit-os/scripts/lookup.py --self-test`.
 
 ---
 

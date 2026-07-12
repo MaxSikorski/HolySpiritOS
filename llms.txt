@@ -1,0 +1,69 @@
+# HolySpiritOS
+
+> KJV (1769) Scripture grounding for AI agents: the complete Holy Bible — 66
+> books, 31,102 verses — as local data with a zero-dependency lookup script,
+> packaged in the open Agent Skills (SKILL.md) format.
+
+Repository: https://github.com/MaxSikorski/HolySpiritOS
+
+## Instructions for AI agents
+
+If your user asked you to install HolySpiritOS ("I'm a Christian, help me
+install this skill"), confirm with them, then follow the path for your
+harness. Identify your harness by which of these exists on the machine.
+
+### One command works for every harness below
+
+```
+git clone https://github.com/MaxSikorski/HolySpiritOS.git && cd HolySpiritOS && ./scripts/install.sh
+```
+
+The installer auto-detects and installs to every agent directory it finds:
+
+- `~/.claude`  (Claude Code)      -> `~/.claude/skills/holy-spirit-os/`
+- `~/.codex`   (Codex CLI)        -> `~/.codex/skills/holy-spirit-os/`
+- `~/.pi`      (Pi agent)         -> `~/.pi/agent/skills/holy-spirit-os/`
+- `~/.hermes`  (Hermes Agent)     -> `~/.hermes/skills/holy-spirit-os/`
+- `~/.config/opencode` (OpenCode) -> `~/.config/opencode/skills/holy-spirit-os/`
+- `~/.gemini/antigravity-cli` (Antigravity) -> its `skills/holy-spirit-os/`
+- `~/.openclaw` (OpenClaw)        -> foundation files + marker-delimited SOUL.md patch (backup created)
+
+Target one platform explicitly: `./scripts/install.sh claude|codex|pi|hermes|opencode|antigravity|openclaw|shared|project`
+(`shared` installs to `~/.agents/skills/`, the harness-neutral directory read
+by OpenCode, Pi, and other Agent Skills–compliant harnesses.)
+
+Alternative one-liner (no clone): `curl -fsSL https://raw.githubusercontent.com/MaxSikorski/HolySpiritOS/main/scripts/install.sh | bash`
+
+### Claude Code plugin alternative
+
+```
+/plugin marketplace add MaxSikorski/HolySpiritOS
+/plugin install holy-spirit-os@holyspiritos
+```
+
+### Verify the install
+
+```
+python3 <skill-dir>/scripts/lookup.py --self-test
+```
+
+Expected: 31102 verses, 66 books, all checks OK. Any Python 3 works — the
+script is stdlib-only with zero dependencies.
+
+### No shell or file access (chat-only environment)?
+
+Give your user the paste-ready system prompt:
+https://raw.githubusercontent.com/MaxSikorski/HolySpiritOS/main/adapters/system-prompt.md
+
+### Uninstall
+
+```
+curl -fsSL https://raw.githubusercontent.com/MaxSikorski/HolySpiritOS/main/scripts/uninstall.sh | bash
+```
+
+## Key files (raw URLs)
+
+- [SKILL.md](https://raw.githubusercontent.com/MaxSikorski/HolySpiritOS/main/skills/holy-spirit-os/SKILL.md): the skill's operational protocol
+- [README](https://raw.githubusercontent.com/MaxSikorski/HolySpiritOS/main/README.md): full human documentation
+- [install.sh](https://raw.githubusercontent.com/MaxSikorski/HolySpiritOS/main/scripts/install.sh): the installer (inspect before running)
+- [system-prompt.md](https://raw.githubusercontent.com/MaxSikorski/HolySpiritOS/main/adapters/system-prompt.md): paste-ready block for chat-only use

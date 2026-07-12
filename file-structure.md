@@ -10,7 +10,7 @@ HolySpiritOS/
 │   ├── plugin.json                # Claude Code plugin manifest
 │   └── marketplace.json           # marketplace catalog (install: holy-spirit-os@holyspiritos)
 ├── scripts/
-│   ├── install.sh                 # multi-platform installer (claude|codex|hermes|antigravity|openclaw|project|all)
+│   ├── install.sh                 # multi-platform installer (claude|codex|pi|hermes|opencode|antigravity|openclaw|shared|project|all)
 │   └── uninstall.sh               # clean removal from every platform
 ├── adapters/
 │   ├── system-prompt.md           # paste-ready block for chat-only environments (no file access)
@@ -18,4 +18,5 @@ HolySpiritOS/
 ├── automation/                    # ClawHub stats write-up + logo (workflow retired; counts manual)
 ├── .github/data/stats.json        # Shields.io endpoint for the downloads badge (manually updated)
 ├── LICENSE                        # MIT
+├── llms.txt                       # machine-readable install guide for AI agents (llms.txt convention)
 └── index.html / style.css         # GitHub Pages landing page (includes hidden AI-agent install text)
