@@ -16,6 +16,7 @@ remove_dir() { # remove_dir <label> <dir>
 
 remove_dir "Claude Code"  "$HOME/.claude/skills/$SKILL_NAME"
 remove_dir "Codex CLI"    "$HOME/.codex/skills/$SKILL_NAME"
+remove_dir "Hermes Agent" "$HOME/.hermes/skills/$SKILL_NAME"
 remove_dir "Antigravity"  "$HOME/.gemini/antigravity-cli/skills/$SKILL_NAME"
 remove_dir "Project"      "$PWD/.agents/skills/$SKILL_NAME"
 

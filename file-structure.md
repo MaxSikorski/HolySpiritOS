@@ -10,7 +10,7 @@ HolySpiritOS/
 │   ├── plugin.json                # Claude Code plugin manifest
 │   └── marketplace.json           # marketplace catalog (install: holy-spirit-os@holyspiritos)
 ├── scripts/
-│   ├── install.sh                 # multi-platform installer (claude|codex|antigravity|openclaw|project|all)
+│   ├── install.sh                 # multi-platform installer (claude|codex|hermes|antigravity|openclaw|project|all)
 │   └── uninstall.sh               # clean removal from every platform
 ├── adapters/
 │   ├── system-prompt.md           # paste-ready block for chat-only environments (no file access)

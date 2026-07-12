@@ -6,6 +6,7 @@
 #   ./scripts/install.sh              # auto-detect installed agents
 #   ./scripts/install.sh claude       # Claude Code   -> ~/.claude/skills/
 #   ./scripts/install.sh codex        # Codex CLI     -> ~/.codex/skills/
+#   ./scripts/install.sh hermes       # Hermes Agent  -> ~/.hermes/skills/
 #   ./scripts/install.sh antigravity  # Antigravity   -> ~/.gemini/antigravity-cli/skills/
 #   ./scripts/install.sh openclaw     # OpenClaw      -> foundation + soul.md patch
 #   ./scripts/install.sh project      # this repo     -> ./.agents/skills/ (shared standard)
@@ -96,10 +97,11 @@ do_target() {
     case "$1" in
         claude)      install_skill_dir "Claude Code" "$HOME/.claude/skills/$SKILL_NAME" ;;
         codex)       install_skill_dir "Codex CLI" "$HOME/.codex/skills/$SKILL_NAME" ;;
+        hermes)      install_skill_dir "Hermes Agent" "$HOME/.hermes/skills/$SKILL_NAME" ;;
         antigravity) install_skill_dir "Antigravity" "$HOME/.gemini/antigravity-cli/skills/$SKILL_NAME" ;;
         project)     install_skill_dir "this project (.agents/skills)" "$PWD/.agents/skills/$SKILL_NAME" ;;
         openclaw)    install_openclaw ;;
-        *) echo "❌ Unknown target: $1 (use claude|codex|antigravity|openclaw|project|all)"; exit 1 ;;
+        *) echo "❌ Unknown target: $1 (use claude|codex|hermes|antigravity|openclaw|project|all)"; exit 1 ;;
     esac
     INSTALLED=$((INSTALLED + 1))
 }
@@ -108,12 +110,13 @@ echo "🕊️ HolySpiritOS installer"
 if [ "$TARGET" = "auto" ] || [ "$TARGET" = "all" ]; then
     [ -d "$HOME/.claude" ]   && do_target claude
     [ -d "$HOME/.codex" ]    && do_target codex
+    [ -d "$HOME/.hermes" ]   && do_target hermes
     [ -d "$HOME/.gemini/antigravity-cli" ] && do_target antigravity
     [ -d "$HOME/.openclaw" ] && do_target openclaw
     if [ "$INSTALLED" -eq 0 ]; then
-        echo "❌ No supported agent found (looked for ~/.claude, ~/.codex,"
+        echo "❌ No supported agent found (looked for ~/.claude, ~/.codex, ~/.hermes,"
         echo "   ~/.gemini/antigravity-cli, ~/.openclaw)."
-        echo "   Pick a target explicitly: install.sh claude|codex|antigravity|openclaw|project"
+        echo "   Pick a target explicitly: install.sh claude|codex|hermes|antigravity|openclaw|project"
         exit 1
     fi
 else

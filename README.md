@@ -14,8 +14,9 @@ in the King James Version (1769) Holy Bible. It ships the complete text — all
 so your agent quotes Scripture *exactly*, never from fuzzy memory.
 
 It uses the open [Agent Skills](https://agentskills.io) `SKILL.md` format, so
-one install works across **Claude Code**, **Codex CLI**, **Antigravity**, and
-**OpenClaw** — and a paste-ready system prompt covers everything else.
+one install works across **Claude Code**, **Codex CLI**, **Hermes Agent**,
+**Antigravity**, and **OpenClaw** — and a paste-ready system prompt covers
+everything else.
 
 > *"For the word of God is quick, and powerful, and sharper than any twoedged
 > sword..."* — **Hebrews 4:12**
@@ -42,12 +43,16 @@ one install works across **Claude Code**, **Codex CLI**, **Antigravity**, and
 
 ## 🚀 Install
 
-**Claude Code — as a plugin (easiest):** inside Claude Code, run
+**Claude Code — as a plugin (recommended):** inside Claude Code, run
 
 ```
 /plugin marketplace add MaxSikorski/HolySpiritOS
 /plugin install holy-spirit-os@holyspiritos
 ```
+
+**Hermes Agent** users: the one-liner below auto-detects `~/.hermes` and
+installs the skill natively — Hermes supports the same open Agent Skills
+standard.
 
 **Any platform — clone, inspect, run:**
 
@@ -57,7 +62,7 @@ cd HolySpiritOS
 ./scripts/install.sh
 ```
 
-**One-liner** (auto-detects Claude Code, Codex, Antigravity, and OpenClaw):
+**One-liner** (auto-detects Claude Code, Codex, Hermes, Antigravity, and OpenClaw):
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/MaxSikorski/HolySpiritOS/main/scripts/install.sh | bash
@@ -69,6 +74,7 @@ Or target one platform explicitly:
 |---|---|---|
 | Claude Code | `./scripts/install.sh claude` | `~/.claude/skills/holy-spirit-os/` |
 | Codex CLI | `./scripts/install.sh codex` | `~/.codex/skills/holy-spirit-os/` |
+| Hermes Agent | `./scripts/install.sh hermes` | `~/.hermes/skills/holy-spirit-os/` |
 | Antigravity | `./scripts/install.sh antigravity` | `~/.gemini/antigravity-cli/skills/holy-spirit-os/` |
 | OpenClaw | `./scripts/install.sh openclaw` | foundation files + `SOUL.md` patch (with backup) |
 | This project only | `./scripts/install.sh project` | `./.agents/skills/holy-spirit-os/` |

@@ -6,7 +6,7 @@ system prompt / custom instructions field. Because there is no verse file in
 these environments, this version leans on the model's own knowledge of the
 KJV and adds honesty guardrails against misquotation.
 
-For agents **with** file access (Claude Code, Codex, Antigravity, OpenClaw),
+For agents **with** file access (Claude Code, Codex, Hermes, Antigravity, OpenClaw),
 install the full skill instead — it retrieves exact verse text and is far
 more reliable: https://github.com/MaxSikorski/HolySpiritOS
 
