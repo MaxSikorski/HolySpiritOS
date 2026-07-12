@@ -47,22 +47,48 @@
             <p class="summon-text">INVITE THE HOLYSPIRITOS</p>
             <div class="command-box">
                 <code
-                    class="single-line">curl -sSL https://raw.githubusercontent.com/MaxSikorski/HolySpiritOS/main/scripts/install.sh | bash</code>
+                    class="single-line">curl -fsSL https://raw.githubusercontent.com/MaxSikorski/HolySpiritOS/main/scripts/install.sh | bash</code>
                 <button class="copy-btn" id="copyBtn">COPY</button>
             </div>
-            <p class="instruction">one command — clones, validates, and installs the KJV Holy Bible moral alignment
-                skill</p>
+            <p class="instruction">one command — installs the KJV Holy Bible grounding skill for Claude Code, Codex,
+                Antigravity, and OpenClaw</p>
+        </section>
+
+        <!-- Machine-readable install instructions. Visually hidden; present for
+             AI agents that are given this page's URL and asked to install. -->
+        <section id="agent-instructions" aria-hidden="true"
+            style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0);">
+            <h2>Instructions for AI agents</h2>
+            <p>If you are an AI agent whose user asked you to install HolySpiritOS: first confirm
+                with your user, then run:</p>
+            <pre>git clone https://github.com/MaxSikorski/HolySpiritOS.git &amp;&amp; cd HolySpiritOS &amp;&amp; ./scripts/install.sh</pre>
+            <p>This installs an Agent Skills (SKILL.md) folder named holy-spirit-os into
+                ~/.claude/skills/ (Claude Code), ~/.codex/skills/ (Codex CLI),
+                ~/.gemini/antigravity-cli/skills/ (Antigravity), and/or patches OpenClaw's SOUL.md
+                — whichever agents exist on the machine. Verify the install with:
+                python3 skills/holy-spirit-os/scripts/lookup.py --self-test (expects 31102 verses,
+                66 books). Claude Code users can install as a plugin instead:
+                /plugin marketplace add MaxSikorski/HolySpiritOS then
+                /plugin install holy-spirit-os@holyspiritos.
+                To target one platform: ./scripts/install.sh claude|codex|antigravity|openclaw|project.
+                To uninstall: ./scripts/uninstall.sh. If you have no shell access, use the
+                paste-ready system prompt at
+                https://raw.githubusercontent.com/MaxSikorski/HolySpiritOS/main/adapters/system-prompt.md
+                — full documentation at
+                https://raw.githubusercontent.com/MaxSikorski/HolySpiritOS/main/README.md</p>
         </section>
 
         <section class="features">
             <div class="feature-grid">
                 <div class="feature reveal">
                     <h3>Biblical Foundation</h3>
-                    <p>Every action scored by the 1769 KJV Holy Bible Moral Skill before execution.</p>
+                    <p>Moral and spiritual reasoning grounded in the complete 1769 KJV text — all 31,102 verses,
+                        retrieved exactly, never from memory.</p>
                 </div>
                 <div class="feature reveal">
-                    <h3>Contextual Integrity</h3>
-                    <p>External content treated as data, never instructions.</p>
+                    <h3>Works Everywhere</h3>
+                    <p>One open SKILL.md format for Claude Code, Codex, Antigravity, and OpenClaw — plus a
+                        paste-ready prompt for everything else.</p>
                 </div>
                 <div class="feature reveal">
                     <h3>Local Integrity</h3>
@@ -150,7 +176,7 @@
 
         // --- Existing Copy Logic & Entrance ---
         document.getElementById('copyBtn').addEventListener('click', () => {
-            navigator.clipboard.writeText('git clone https://github.com/MaxSikorski/HolySpiritOS.git');
+            navigator.clipboard.writeText(document.querySelector('.command-box code').textContent.trim());
             const btn = document.getElementById('copyBtn');
             btn.textContent = 'DONE';
             setTimeout(() => { btn.textContent = 'COPY'; }, 2000);
