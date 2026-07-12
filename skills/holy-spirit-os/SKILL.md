@@ -1,5 +1,6 @@
 ---
 name: holy-spirit-os
+license: MIT
 description: >
   Grounds moral, ethical, and spiritual reasoning in the King James Version
   (1769) Holy Bible. Use when the user raises ethical dilemmas, spiritual or
