@@ -51,6 +51,7 @@ ABBREV = {
     "eccl": "Ecclesiastes", "ecc": "Ecclesiastes", "qoh": "Ecclesiastes",
     "song": "Song of Solomon", "sos": "Song of Solomon",
     "song of songs": "Song of Solomon", "cant": "Song of Solomon",
+    "solomon's song": "Song of Solomon", "solomons song": "Song of Solomon",
     "isa": "Isaiah", "is": "Isaiah",
     "jer": "Jeremiah", "je": "Jeremiah",
     "lam": "Lamentations", "la": "Lamentations",
@@ -235,6 +236,7 @@ def cmd_self_test():
     verses = load_verses()
     checks = {
         "Genesis 1:1": "In the beginning God created the heaven and the earth.",
+        "Song of Solomon 2:1": "I [am] the rose of Sharon, [and] the lily of the valleys.",
         "Revelation 22:21": "The grace of our Lord Jesus Christ [be] with you all. Amen.",
     }
     ok = len(verses) == 31102
