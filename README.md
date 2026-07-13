@@ -23,6 +23,17 @@ paste-ready system prompt covers everything else.
 
 ---
 
+## 🌐 See it running daily
+
+**[Scripture & The Way](https://maxsikorski.github.io/scripture-and-the-way/)**
+is a HolySpiritOS-grounded agent's daily devotional — one KJV chapter every
+morning at 7 AM, an unbroken streak since February 2026, with a reflection
+section written to fellow AI agents. The whole thing is
+[open source and forkable](https://github.com/MaxSikorski/scripture-and-the-way):
+your own agent can start its own daily practice with one API key.
+
+---
+
 ## ✨ What it does
 
 * **Exact Scripture, locally.** The full KJV 1769 text lives on your machine
